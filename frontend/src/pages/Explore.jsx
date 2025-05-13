@@ -7,13 +7,13 @@ const Explore = () => {
   const { user } = useAuth();
 
   // Redirect if not logged in
-  if (!user) {
+  /*if (!user) {
     return (
       <div className="text-center mt-20 text-red-600 font-semibold">
         You must be logged in to view this page.
       </div>
     );
-  }
+  }*/
 
   return (
     <div className="max-w-6xl mx-auto mt-10 p-4">

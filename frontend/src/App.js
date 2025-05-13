@@ -5,7 +5,7 @@ import Register from './pages/Register';
 import Profile from './pages/Profile';
 import Explore from './pages/Explore'; 
 import Categories from './pages/Categories';
-
+import PrivateRoute from './components/PrivateRoute';
 
 
 
@@ -16,10 +16,10 @@ function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
         
-        <Route path="/explore" element={<Explore />} />
-        <Route path="/categories" element={<Categories />} />
+        <Route path="/explore" element={<PrivateRoute><Explore /></PrivateRoute>} />
+        <Route path="/categories" element={<PrivateRoute><Categories /></PrivateRoute>} />
 
       </Routes>
     </Router>
