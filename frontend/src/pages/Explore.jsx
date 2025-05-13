@@ -1,44 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useAuth } from '../context/AuthContext';
 import axiosInstance from '../axiosConfig';
+import BookList from '../components/BookList';
 
 const Explore = () => {
-  const [books, setBooks] = useState([]);
+  const { user } = useAuth();
 
-  useEffect(() => {
-    // We'll implement this backend later
-    const fetchBooks = async () => {
-      try {
-        const { data } = await axiosInstance.get('/books/explore');
-        setBooks(data);
-      } catch (error) {
-        console.error('Failed to load books', error);
-      }
-    };
-
-    fetchBooks();
-  }, []);
+  // Redirect if not logged in
+  if (!user) {
+    return (
+      <div className="text-center mt-20 text-red-600 font-semibold">
+        You must be logged in to view this page.
+      </div>
+    );
+  }
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Explore Books</h1>
-      {books.length === 0 ? (
-        <p>No books available yet.</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {books.map((book) => (
-            <div
-              key={book._id}
-              className="border rounded-xl shadow p-4 hover:shadow-md transition"
-            >
-              <h2 className="text-xl font-semibold">{book.title}</h2>
-              <p className="text-gray-600">by {book.author}</p>
-              <p className="text-sm mt-1 italic text-gray-500">{book.genre}</p>
-            </div>
-          ))}
-        </div>
-      )}
+    <div className="max-w-6xl mx-auto mt-10 p-4">
+      {/* Rotating Banner Placeholder */}
+      <div className="w-full h-60 bg-blue-100 rounded-xl flex items-center justify-center shadow mb-10">
+        <p className="text-lg text-blue-700 font-semibold">[ Rotating Banner Placeholder ]</p>
+      </div>
+
+      {/* Book Lists */}
+      <BookList title="Staff Picks" />
+      <BookList title="Top Audiobooks" query="?type=AudioBook" />
     </div>
   );
 };
 
 export default Explore;
+
