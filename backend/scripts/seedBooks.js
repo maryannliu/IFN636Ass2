@@ -1,25 +1,40 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const fs = require('fs');
+const path = require('path');
 const { Book, PaperbackBook, eBook, AudioBook } = require('../models/Books');
 
 dotenv.config();
+
+// Connect to MongoDB
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Connected to DB'))
   .catch((err) => console.error('Connection failed', err));
 
+// Read and parse JSON file
+const rawData = fs.readFileSync(path.join(__dirname, '../data/seedBooks.json'));
+const rawBooks = JSON.parse(rawData);
+
+// Convert raw books into Mongoose model instances
+const bookInstances = rawBooks.map((book) => {
+  const { type, ...props } = book;
+  switch (type) {
+    case 'PaperbackBook': return new PaperbackBook(props);
+    case 'eBook': return new eBook(props);
+    case 'AudioBook': return new AudioBook(props);
+    default: return null;
+  }
+}).filter(book => book !== null);
+
+// Seed function
 const seedBooks = async () => {
   try {
-    await Book.deleteMany(); // optional
-    const books = [
-      new PaperbackBook({ isbn: '101', title: 'Learn JS', author: 'Jane', genre: 'Tech', pages: 300 }),
-      new eBook({ isbn: '102', title: 'Async Deep Dive', author: 'Tom', genre: 'Programming', pages: 150, fileSize: 2 }),
-      new AudioBook({ isbn: '103', title: 'Focus Mode', author: 'Nina', genre: 'Self-Help', fileSize: 4, narrator: 'Alex', durationInMins: 180 }),
-    ];
-    await Book.insertMany(books);
-    console.log('✅ Books seeded');
+    await Book.deleteMany(); // Optional: Clear existing data
+    await Book.insertMany(bookInstances);
+    console.log('✅ Books seeded successfully');
     process.exit();
   } catch (err) {
-    console.error('❌ Error:', err);
+    console.error('❌ Error seeding books:', err);
     process.exit(1);
   }
 };
