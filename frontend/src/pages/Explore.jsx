@@ -24,7 +24,7 @@ const Explore = () => {
 
       {/* Book Lists */}
       <BookList title="Staff Picks" />
-      <BookList title="Top Audiobooks" query="?type=AudioBook" />
+      <BookList title="Top Audiobooks" query="?type=AudioBook" endpoint="/api/books/random" limit={6} />
     </div>
   );
 };
