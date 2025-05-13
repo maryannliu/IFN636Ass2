@@ -13,9 +13,10 @@ const Categories = () => {
       try {
         const res = await axiosInstance.get('/api/books/genres');
         setGenres(res.data);
-        setSelectedGenre(res.data[0]); // default to first genre
-      } catch (err) {
-        console.error('Failed to load genres:', err);
+        setSelectedGenre(res.data[0]); 
+      } catch (error) {
+        const message = error.response?.data?.message || 'Failed to load genres';
+        alert(message);
       }
     };
 

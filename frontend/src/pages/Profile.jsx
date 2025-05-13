@@ -27,7 +27,8 @@ const Profile = () => {
           address: response.data.address || '',
         });
       } catch (error) {
-        alert('Failed to fetch profile. Please try again.');
+        const message = error.response?.data?.message || 'Failed to fetch profile. Please try again';
+        alert(message);
       } finally {
         setLoading(false);
       }
@@ -45,7 +46,8 @@ const Profile = () => {
       });
       alert('Profile updated successfully!');
     } catch (error) {
-      alert('Failed to update profile. Please try again.');
+      const message = error.response?.data?.message || 'Failed to update profile. Please try again';
+      alert(message);
     } finally {
       setLoading(false);
     }

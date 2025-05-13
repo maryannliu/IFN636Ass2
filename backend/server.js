@@ -15,6 +15,12 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/books', require('./routes/bookRoutes'));
 
 
+// error handling
+const { errorHandler, handleNotFound } = require('./middleware/errorHandler');
+app.use(handleNotFound);
+app.use(errorHandler);
+
+
 // Export the app object for testing
 if (require.main === module) {
     connectDB();

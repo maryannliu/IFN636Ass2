@@ -11,12 +11,16 @@ const registerUser = async (req, res) => {
     const { name, email, password } = req.body;
     try {
         const userExists = await User.findOne({ email });
-        if (userExists) return res.status(400).json({ message: 'User already exists' });
+        if (userExists) {
+            res.status(400);
+            throw new Error('User already exists');
+        }
 
         const user = await User.create({ name, email, password });
         res.status(201).json({ id: user.id, name: user.name, email: user.email, token: generateToken(user.id) });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(res.statusCode === 200 ? 500 : res.statusCode);
+        throw new Error(error.message);
     }
 };
 
@@ -27,10 +31,12 @@ const loginUser = async (req, res) => {
         if (user && (await bcrypt.compare(password, user.password))) {
             res.json({ id: user.id, name: user.name, email: user.email, token: generateToken(user.id) });
         } else {
-            res.status(401).json({ message: 'Invalid email or password' });
+            res.status(401);
+            throw new Error('Invalid email or password');
         }
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(res.statusCode === 200 ? 500 : res.statusCode);
+        throw new Error(error.message);
     }
 };
 
@@ -38,7 +44,8 @@ const getProfile = async (req, res) => {
     try {
       const user = await User.findById(req.user.id);
       if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+        return res.status(404);
+        throw new Error('User not found');
       }
   
       res.status(200).json({
@@ -48,14 +55,18 @@ const getProfile = async (req, res) => {
         address: user.address,
       });
     } catch (error) {
-      res.status(500).json({ message: 'Server error', error: error.message });
+        res.status(res.statusCode === 200 ? 500 : res.statusCode);
+        throw new Error(error.message);
     }
   };
 
 const updateUserProfile = async (req, res) => {
     try {
         const user = await User.findById(req.user.id);
-        if (!user) return res.status(404).json({ message: 'User not found' });
+        if (!user) {
+            res.status(404);
+            throw new Error('User not found');
+            }
 
         const { name, email, university, address } = req.body;
         user.name = name || user.name;
@@ -66,7 +77,8 @@ const updateUserProfile = async (req, res) => {
         const updatedUser = await user.save();
         res.json({ id: updatedUser.id, name: updatedUser.name, email: updatedUser.email, university: updatedUser.university, address: updatedUser.address, token: generateToken(updatedUser.id) });
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(res.statusCode === 200 ? 500 : res.statusCode);
+        throw new Error(error.message);
     }
 };
 
