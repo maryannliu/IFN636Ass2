@@ -4,6 +4,8 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/Profile';
 import ExplorePage from './pages/ExplorePage';
+import CategoryPage from './pages/CategoriesPage';
+
 import './App.css'
 
 
@@ -16,6 +18,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/explore" element={<ExplorePage />} />
+        <Route path="/categories" element={<CategoryPage />} />
       </Routes>
     </Router>
   );
