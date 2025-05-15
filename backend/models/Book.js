@@ -13,7 +13,8 @@ const bookSchema = new mongoose.Schema({
   type: { 
     type: String,
     enum: ['PaperbackBook', 'Ebook', 'AudioBook'],
-    required: true
+    required: true, 
+    default: 'Unknown'
   }
 }, options);
 
