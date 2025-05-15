@@ -1,0 +1,35 @@
+function adaptGoogleBook(item, type = 'PaperbackBook') {
+  const info = item.volumeInfo || {};
+  const base = {
+    isbn: item.volumeInfo.industryIdentifiers?.[0]?.identifier || item.id,
+    title: info.title || 'Untitled',
+    author: (info.authors && info.authors.join(', ')) || 'Unknown',
+    genre: (info.categories && info.categories[0]) || 'General',
+    type,
+    availability: true
+  };
+
+  switch (type) {
+    case 'Ebook':
+      return {
+        ...base,
+        pages: info.pageCount || 0,
+        fileSize: Math.floor(Math.random() * 5000) + 500
+      };
+    case 'AudioBook':
+      return {
+        ...base,
+        fileSize: Math.floor(Math.random() * 100000) + 10000,
+        narrator: 'AI Narrator',
+        durationInMins: Math.floor(info.pageCount || 100)
+      };
+    case 'PaperbackBook':
+    default:
+      return {
+        ...base,
+        pages: info.pageCount || 0
+      };
+  }
+}
+
+module.exports = { adaptGoogleBook };
