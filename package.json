@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "Complete MERN Task Manager Application",
   "scripts": {
-    "install-all": "npm install && npm install --prefix backend && npm install --prefix frontend",
+    "install-all": "npm install && npm install --prefix backend && npm install --prefix frontend && npm run import:books" ,
     "start": "concurrently \"npm run prod --prefix backend\" \"npm start --prefix frontend\"",
-    "dev": "concurrently \"npm run dev --prefix backend\" \"npm start --prefix frontend\""
+    "dev": "concurrently \"npm run dev --prefix backend\" \"npm start --prefix frontend\"",
+    "seed:books": "node backend/scripts/seedBooks.js", 
+    "import:books": "node backend/scripts/importBooks.js"
   },
   "devDependencies": {
     "chai": "^5.1.2",

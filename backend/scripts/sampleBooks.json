@@ -1,0 +1,29 @@
+[
+  {
+    "isbn": "9780143128540",
+    "title": "Thinking, Fast and Slow",
+    "author": "Daniel Kahneman",
+    "genre": "Psychology",
+    "type": "PaperbackBook",
+    "pages": 499
+  },
+  {
+    "isbn": "9781982137274",
+    "title": "Atomic Habits",
+    "author": "James Clear",
+    "genre": "Self-help",
+    "type": "Ebook",
+    "pages": 320,
+    "fileSize": 2
+  },
+  {
+    "isbn": "9780593168176",
+    "title": "Becoming",
+    "author": "Michelle Obama",
+    "genre": "Memoir",
+    "type": "AudioBook",
+    "fileSize": 350,
+    "narrator": "Michelle Obama",
+    "durationInMins": 1140
+  }
+]
