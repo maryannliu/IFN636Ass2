@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const path = require('path');
 const Book = require('../models/Book');
-const { adaptGoogleBook } = require('../adapters/googleBooksAdapter');
+const { adaptGoogleBook } = require('../adapter/googleBooksAdapter');
 
 // Load environment variables
 dotenv.config({ path: path.join(__dirname, '../.env') });
